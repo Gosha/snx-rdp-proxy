@@ -1,34 +1,44 @@
 FROM ubuntu:bionic
 
-WORKDIR /tmp
+# Add support for :i386 packages
+RUN dpkg --add-architecture i386 && apt-get -qq update
 
-RUN dpkg --add-architecture i386 &&\
-  apt-get -qq update && \
-  apt-get -qq dist-upgrade
-
-RUN apt-get install -y libpam0g:i386 \
+RUN apt-get install -y \
+  # snxvpn gets installed with pip
+  python3-pip \
+  # snx dependencies
+  libpam0g:i386 \
   libx11-6:i386 \
-  libstdc++6:i386 \
-  libstdc++5:i386
+  libstdc++5:i386 \
+  # Port forwarding
+  socat \
+  # Debug tools
+  curl iproute2 iputils-ping net-tools
 
-RUN apt-get install -y python3-pip git net-tools sysstat
-ENV TZ="Europe/Stockholm"
-RUN DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true apt-get install -yq tzdata && \
-  ln -fs /usr/share/zoneinfo/$TZ /etc/localtime && \
-  dpkg-reconfigure -f noninteractive tzdata
-
+# snx tries to do `modprobe tun` during connection initialization
+# Since this image should be run with --privileged that module is already loaded.
+# So we just trick snx into thinking it loaded it.
 RUN echo "#/bin/sh\ntrue" >> /sbin/modprobe && chmod +x /sbin/modprobe
-
 
 WORKDIR /workspace
 
+# Install snx
 ADD https://access.svea.com/SNX/INSTALL/snx_install.sh .
-COPY root.db /etc/snx/root.db
 RUN chmod +x ./snx_install.sh && ./snx_install.sh
 
+# When connecting with snx to a server for the first time
+# snx asks if you trust the certificate by showing an X dialog
+# that displays a plain text fingerprint of the certificate.
+# When pressing yes in that dialog, this file gets written.
+# By supplying this file beforehand we can skip setting up X.
+COPY root.db /etc/snx/root.db
+
+# Install snxvpn (provides snxconnect)
 WORKDIR /snxvpn
 COPY snxvpn .
 COPY snxvpnversion.py .
-RUN pip3 install -e .
+RUN pip3 install .
 
-RUN apt-get install -y iptables iputils-ping curl iproute2
+EXPOSE 3389
+
+CMD snxconnect
