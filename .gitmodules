@@ -1,0 +1,3 @@
+[submodule "snxvpn"]
+	path = snxvpn
+	url = https://github.com/Gosha/snxvpn.git
