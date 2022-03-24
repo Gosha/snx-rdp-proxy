@@ -9,7 +9,7 @@ Usage:
 - Start with
 
   ```sh
-  docker run -P --rm --name snx --privileged -it --env-file .env goshaza/snx-rdp-proxy
+  docker run -p 3389:3389 --rm --name snx --privileged -it --env-file .env goshaza/snx-rdp-proxy
   ```
 
 - Fill in password (if not in .env)
