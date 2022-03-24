@@ -41,4 +41,6 @@ RUN pip3 install .
 
 EXPOSE 3389
 
-CMD snxconnect
+COPY entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
