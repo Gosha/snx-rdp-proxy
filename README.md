@@ -24,3 +24,25 @@ Usage:
 
 - If it responds with "Unexpected response", that means it's _either_ the wrong username/password _or_ a temporary error.
   Double check the password, and/or try again.
+
+## How it works
+
+### Original
+
+When installing normally, CheckPoint will download and install snx in the background.
+It starts it in the background with `snx -Z`, and then passes configuration options over a local socket.
+`snx` in turns sets up a tunnel device and proxies all relevant traffic though it, hence creating a VPN.
+
+![Diagram of original flow](./images/checkpoint-snx.png)
+
+### Inside docker
+
+Instead, https://github.com/schlatterbeck/snxvpn replaces the CheckPoint GUI.
+Provided with username/password it logs into the access page to acquire the correct parameters to send to snx.
+
+To expose RDP from inside docker, `socat` is used. It listens to connections on 3389 and forwards all traffic to `$REMOTE_HOST:$REMOTE_PORT`. When snx is up and running, that can be an RDP host on the remote network.
+
+![Diagram of original flow](./images/snx-docker.png)
+
+Note that you can install `snx`/`snxvpn` locally on your computer to get a VPN without the checkpoint client. On linux, you might have trouble getting the 32bit snx binary to run though.
+There is however an `snx` darwin binary that should work on x64.
