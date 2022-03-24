@@ -16,6 +16,7 @@ Usage:
 - Fill in One-time code.  
   _Note that since snxvpn uses `getpass` the input not visible_.
 - Connect with RDP to localhost:3389
+- After you've confirmed it works you can type <kbd>Ctrl</kbd> + <kbd>P</kbd> <kbd>Ctrl</kbd> + <kbd>Q</kbd> in the terminal window to detach and leave it running in the background.
 
 ## Notes
 
