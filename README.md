@@ -1,7 +1,7 @@
 # SNX RDP Proxy
 
 Sets up environment where [`snxconnect`](https://github.com/schlatterbeck/snxvpn) works.
-Forwards incoming connections on port 3389 to `REMOTE_HOST` and hosts a SOCKS proxy on port 1080.
+Forwards incoming connections on port 3389 to `REMOTE_HOST`, and hosts a SOCKS proxy on port 1080.
 
 Usage:
 
@@ -20,7 +20,7 @@ Usage:
 
 - Fill in password (if not in .env)
 - Fill in One-time code.  
-  _Note that since snxvpn uses `getpass` the input not visible_.
+  _Note that since snxvpn uses `getpass`, the input is not visible_.
 - Connect with RDP to localhost:3389
 - After you've confirmed it works you can type <kbd>Ctrl</kbd> + <kbd>P</kbd> <kbd>Ctrl</kbd> + <kbd>Q</kbd> in the terminal window to detach and leave it running in the background.
 - Open a chrome instance with proxy set up with
