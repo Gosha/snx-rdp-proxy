@@ -10,8 +10,11 @@ Usage:
 
   ```sh
   docker run --rm --name snx -p 3389:3389 -p 1080:1080 --privileged -it --env-file .env goshaza/snx-rdp-proxy
+  ```
 
-  # Or, if you have save cookies enabled:
+  Or, if you have save cookies enabled:
+
+  ```sh
   docker run --rm --name snx -p 3389:3389 -p 1080:1080 -v "snx-cookies:/data" --privileged -it --env-file .env goshaza/snx-rdp-proxy
   ```
 
