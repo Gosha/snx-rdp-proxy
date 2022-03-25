@@ -23,7 +23,7 @@ Usage:
 - Open a chrome instance with proxy set up with
 
   ```sh
-  open -na "Google Chrome" --args --proxy-server=socks5://localhost:1080 --no-setup --user-data-dir=$HOME/proxy-user
+  open -na "Google Chrome" --args --proxy-server=socks5://localhost:1080 --no-first-run --user-data-dir=$HOME/proxy-user
   ```
 
 ## Notes
