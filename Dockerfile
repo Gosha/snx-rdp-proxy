@@ -43,4 +43,8 @@ EXPOSE 3389
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+
+RUN apt-get install dante-server
+ADD ./danted.conf /etc/danted.conf
+
 CMD ["/entrypoint.sh"]

@@ -5,6 +5,8 @@ socat -d -d TCP4-LISTEN:3389,fork,reuseaddr "TCP4:${REMOTE_HOST:?Missing REMOTE_
 
 trap "echo Stopping; exit 0" SIGTERM SIGINT
 
+/usr/sbin/danted -f /etc/danted.conf -D
+
 snxconnect ${DEBUG:+-D} \
     -H access.svea.com \
     -F Login/Login \
