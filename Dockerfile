@@ -12,6 +12,8 @@ RUN apt-get install -y \
   libstdc++5:i386 \
   # Port forwarding
   socat \
+  # Socks proxy
+  dante-server \
   # Debug tools
   curl iproute2 iputils-ping net-tools
 
@@ -39,8 +41,12 @@ COPY snxvpn .
 COPY snxvpnversion.py .
 RUN pip3 install .
 
-EXPOSE 3389
+# Socks proxy config
+ADD ./danted.conf /etc/danted.conf
+
+EXPOSE 3389 1080
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
+
 CMD ["/entrypoint.sh"]

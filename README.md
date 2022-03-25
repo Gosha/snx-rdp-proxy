@@ -1,7 +1,7 @@
 # SNX RDP Proxy
 
 Sets up environment where [`snxconnect`](https://github.com/schlatterbeck/snxvpn) works.
-Forwards incoming connections on port 3389 to `REMOTE_HOST`.
+Forwards incoming connections on port 3389 to `REMOTE_HOST` and hosts a SOCKS proxy on port 1080.
 
 Usage:
 
@@ -9,7 +9,7 @@ Usage:
 - Start with
 
   ```sh
-  docker run -p 3389:3389 --rm --name snx --privileged -it --env-file .env goshaza/snx-rdp-proxy
+  docker run --rm --name snx -p 3389:3389 -p 1080:1080 --privileged -it --env-file .env goshaza/snx-rdp-proxy
   ```
 
 - Fill in password (if not in .env)
@@ -17,6 +17,11 @@ Usage:
   _Note that since snxvpn uses `getpass` the input not visible_.
 - Connect with RDP to localhost:3389
 - After you've confirmed it works you can type <kbd>Ctrl</kbd> + <kbd>P</kbd> <kbd>Ctrl</kbd> + <kbd>Q</kbd> in the terminal window to detach and leave it running in the background.
+- Open a chrome instance with proxy set up with
+
+  ```sh
+  open -na "Google Chrome" --args --proxy-server=socks5://localhost:1080 --no-setup --user-data-dir=$HOME/proxy-user
+  ```
 
 ## Notes
 
