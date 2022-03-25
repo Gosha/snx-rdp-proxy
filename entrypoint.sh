@@ -25,6 +25,7 @@ snxconnect ${DEBUG:+-D} \
     -R ssl_vpn_Svea_VPN_Login \
     -E SNX/extender \
     -U "${USERNAME:?Missing username}" \
+    ${SAVE_COOKIES:+ -c /data/cookies --save-cookies} \
     ${PASSWORD:+ -P "$PASSWORD"} &
 
 wait $!
