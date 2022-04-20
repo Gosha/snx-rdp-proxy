@@ -37,6 +37,14 @@ Usage:
 - If it responds with "Unexpected response", that means it's _either_ the wrong username/password _or_ a temporary error.
   Double check the password, and/or try again.
 
+- When the gateway certificate is updated, [`root.db`](./root.db) has to be updated.
+  A hard-coded file is provided, but can be overridden with `docker run -v path/to/root.db:/etc/snx/root.db ...`.
+
+  During normal operation snx shows an X dialog that asks to verify the fingerprint. But this image doesn't have an X server, so when the fingerprint doesn't match, snx just quits.
+
+- Debug logging for `snx` can be enabled by writing `debug yes` to `~/.snxrc` (`/root/.snxrc`).
+  `snx` then writes a verbose log to `~/snx.elg` (`/root/snx.elg`).
+
 ## How it works
 
 ### Original
