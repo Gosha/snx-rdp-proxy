@@ -29,6 +29,24 @@ Usage:
   open -na "Google Chrome" --args --proxy-server=socks5://localhost:1080 --no-first-run --user-data-dir=$HOME/proxy-user
   ```
 
+## Building:
+
+`snx` only works with i386/amd64.
+
+- Build with
+
+  ```sh
+  docker build -t snx-rdp-proxy .
+  # Or, on ARM-systems:
+  DOCKER_DEFAULT_PLATFORM=linux/amd64 docker build -t snx-rdp-proxy .
+  ```
+
+- Run with:
+  ```sh
+  docker run -p 3389:3389 -p 1080:1080 --rm --name snx --privileged -it --env-file .env snx-rdp-proxy
+  ```
+  See usage notes above.
+
 ## Notes
 
 - Sometimes it won't accept the one-time code no matter how many times you enter it correctly.
